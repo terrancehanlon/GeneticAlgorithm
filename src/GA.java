@@ -17,9 +17,12 @@ public class GA extends GACompents{
 		String[][] chrom = new String[x][y];
 		ga.generatePopulation(chrom);
 		String[] a = ga.decodeChrom(chrom);
-		System.out.println(x);
+		System.out.println("Population size : " + x);
+		System.out.println("Gene Size per chromosome: " + y);
 		
 		
+		
+		System.out.println("Binary representations of chromosomes : ");
 		for(int i = 0; i < x; i++){
 			for(int j = 0; j < ga.numberOfGenes; j++){
 				System.out.print(chrom[i][j]);
@@ -27,7 +30,7 @@ public class GA extends GACompents{
 			System.out.println();
 		}
 		System.out.println("---------");
-		
+		System.out.println("Decimal representations of chromosomes : ");
 		
 		for(int i = 0; i < a.length; i++){
 		System.out.println(a[i]);
