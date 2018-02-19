@@ -5,10 +5,7 @@ import java.util.*;
 
 public class GA extends GACompents{
 
-
-	
-	public static void main(String[] args){
-		try{
+	public static void runGA(){
 		Random ran = new Random();
 		GACompents ga = new GACompents();
 		
@@ -36,12 +33,12 @@ public class GA extends GACompents{
 		System.out.println(a[i]);
 		}
 		
-		}
-		catch(Throwable j){
-			 System.err.println("Uncaught exception - " + j.getMessage());
-		     j.printStackTrace(System.err);
-		}
-
+		
+		
+	}
+	public static void main(String[] args){
+		
+		runGA();
 	}
 }
 
