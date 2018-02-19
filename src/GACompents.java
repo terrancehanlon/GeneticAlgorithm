@@ -1,9 +1,16 @@
 import javax.print.attribute.standard.NumberOfInterveningJobs;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptEngine;
+import javax.script.ScriptException;
+import javax.script.SimpleBindings;
+
 import java.util.Random;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GACompents {
 	
-	 int objFunction;
+	 String objFunction;
 	 int numberIndiv;
 	 int numberOfGenes;
 	 double[][] chromosomes;
@@ -11,13 +18,13 @@ public class GACompents {
 	
 	
 	public GACompents(){
-		int objFunction;
+		String objFunction = "15*x -x.*x";
 		int numberIndiv = 3;
 		int numberOfGenes = 3;
 		chromosomes = new double[numberIndiv][numberOfGenes];
 	}
 	
-	public void setObjFun(int objFun){
+	public void setObjFun(String objFun){
 		objFunction = objFun;
 	}
 	
@@ -55,4 +62,39 @@ public class GACompents {
 		return decodedValues;
 	}
 
+	public void checkPopulationFitness(String[][] chromosomes){
+		//returns highest value and mean?
+		
+		int[] fitnesses = new int[numberIndiv];
+		
+		//Decimal values
+		String[] arrayToCheck = decodeChrom(chromosomes);
+		
+		for(int i = 0; i < arrayToCheck.length; i++)
+		{
+			fitnesses[i] = getFitness(arrayToCheck[i]);
+		}
+		
+	}
+	public int getFitness(String variable) throws ScriptException{
+		ScriptEngineManager mgr = new ScriptEngineManager();
+		ScriptEngine engine = mgr.getEngineByName("JavaScript");
+		Map<String, Object> values = new HashMap<String, Object>();
+		String[] objFunArr = objFunction.split("");
+		StringBuilder newObjFun = new StringBuilder();
+		
+		for(int i = 0; i < objFunArr.length; i++){
+			if(objFunArr[i].equals("x"))
+				objFunArr[i] = variable;
+		}
+		
+		for(int i = 0; i < objFunArr.length; i++)
+			newObjFun.append(objFunArr[i]);
+		
+		//System.out.println(engine.eval(newObjFun.toString()));
+		
+		return (Integer)engine.eval(newObjFun.toString());
+		
+		
+	}
 }	

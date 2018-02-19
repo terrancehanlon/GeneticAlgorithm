@@ -2,15 +2,18 @@
 import java.io.*;
 import java.util.*;
 
+import javax.script.ScriptException;
+
 
 public class GA extends GACompents{
 
-	public static void runGA(){
+	public static void runGA() throws ScriptException{
 		Random ran = new Random();
 		GACompents ga = new GACompents();
 		
 		ga.setNumberIndiv(4);
 		ga.setNumberGenes(4);
+		ga.setObjFun("15*x -x*x");
 		int x = ga.numberIndiv;
 		int y = ga.numberOfGenes;
 		
@@ -36,10 +39,11 @@ public class GA extends GACompents{
 		System.out.println(a[i]);
 		}
 		
+		ga.checkFitness("3");
 		
 		
 	}
-	public static void main(String[] args){
+	public static void main(String[] args) throws ScriptException{
 		
 		runGA();
 	}
