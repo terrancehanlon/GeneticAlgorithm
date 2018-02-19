@@ -62,19 +62,22 @@ public class GACompents {
 		return decodedValues;
 	}
 
-	public void checkPopulationFitness(String[][] chromosomes){
+	public void checkPopulationFitness(String[] chromosomes) throws ScriptException{
 		//returns highest value and mean?
 		
 		int[] fitnesses = new int[numberIndiv];
 		
 		//Decimal values
-		String[] arrayToCheck = decodeChrom(chromosomes);
+		//String[] arrayToCheck = decodeChrom(chromosomes);
 		
-		for(int i = 0; i < arrayToCheck.length; i++)
+		for(int i = 0; i < chromosomes.length; i++)
 		{
-			fitnesses[i] = getFitness(arrayToCheck[i]);
+			fitnesses[i] = getFitness(chromosomes[i]);
 		}
 		
+		for(int i = 0; i < fitnesses.length; i++){
+			System.out.println(fitnesses[i]);
+		}
 	}
 	public int getFitness(String variable) throws ScriptException{
 		ScriptEngineManager mgr = new ScriptEngineManager();

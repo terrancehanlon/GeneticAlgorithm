@@ -39,7 +39,8 @@ public class GA extends GACompents{
 		System.out.println(a[i]);
 		}
 		
-		ga.checkFitness("3");
+		System.out.println("---------");
+		ga.checkPopulationFitness(a);
 		
 		
 	}
