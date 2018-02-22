@@ -62,10 +62,10 @@ public class GACompents {
 		return decodedValues;
 	}
 
-	public void checkPopulationFitness(String[] chromosomes) throws ScriptException{
+	public double[] checkPopulationFitness(String[] chromosomes) throws ScriptException{
 		//returns highest value and mean?
 		
-		int[] fitnesses = new int[numberIndiv];
+		double[] fitnesses = new double[numberIndiv];
 		
 		//Decimal values
 		//String[] arrayToCheck = decodeChrom(chromosomes);
@@ -78,7 +78,25 @@ public class GACompents {
 		for(int i = 0; i < fitnesses.length; i++){
 			System.out.println(fitnesses[i]);
 		}
+		return fitnesses;
 	}
+	public double getMostFit(String[] chromosomes){
+		double fittest = -1;
+		for(int i = 0; i < chromosomes.length; i++){
+			if(Double.parseDouble(chromosomes[i]) > fittest)
+				fittest = Double.parseDouble(chromosomes[i]);
+		}
+		return fittest;
+	}
+	public double getMostFitFitness(double[] chromosomes){
+		double fittest = -1;
+		for(int i = 0; i < chromosomes.length; i++){
+			if((chromosomes[i]) > fittest)
+				fittest = (chromosomes[i]);
+		}
+		return fittest;
+	}
+	
 	public int getFitness(String variable) throws ScriptException{
 		ScriptEngineManager mgr = new ScriptEngineManager();
 		ScriptEngine engine = mgr.getEngineByName("JavaScript");
