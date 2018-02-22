@@ -10,7 +10,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
-//import java.util.ArrayList;
+import java.util.ArrayList;
 //import java.util.List;
 //import java.util.Random;
 import javax.swing.JFrame;
@@ -22,9 +22,14 @@ import javax.script.ScriptException;
 
 public class GA extends GACompents{
 
-	public static void runGA(int numberOfGenerations) throws ScriptException{
+	public static void runGA() throws ScriptException{
 		Random ran = new Random();
 		GACompents ga = new GACompents();
+		
+		//basic initialization
+		int numberOfGenerations = 0;
+		ArrayList<Double> listOfHighestFitnesses = new ArrayList<Double>();
+		
 		
 		ga.setNumberIndiv(10);
 		ga.setNumberGenes(3);
@@ -62,22 +67,23 @@ public class GA extends GACompents{
 		System.out.println("---------");
 		System.out.println("Most fit: ");
 		double mostFit = ga.getMostFit(decimalVersions);
+		listOfHighestFitnesses.add(mostFit);
 		System.out.print(mostFit + " ,");
 		double fitnessOfMostFit = ga.getMostFitFitness(initialFitnessLevels);
 		System.out.println(" " + fitnessOfMostFit);
 		
-		int whileCount = 1;
-		while(whileCount < numberOfGenerations){
-			
-			whileCount++;
-		}
 		
+		//Main GA loop
+		while(ga.mainLoopCheck(listOfHighestFitnesses)){
+			
+		}
+
 		
 	}
 	
 	public static void main(String[] args) throws ScriptException{
 		System.out.println("Maximize this function");
-		runGA(3);
+		runGA();
 	}
 }
 

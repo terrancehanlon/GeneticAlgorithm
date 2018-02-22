@@ -7,6 +7,7 @@ import javax.script.SimpleBindings;
 import java.util.Random;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ArrayList;
 
 public class GACompents {
 	
@@ -116,6 +117,27 @@ public class GACompents {
 		
 		return (Integer)engine.eval(newObjFun.toString());
 		
+		
+	}
+	public boolean getDifference(double val1, double val2){
+		
+		 if(Math.abs(val1 - val2) < 3)
+			 return true;
+		 else
+			 return false;
+		
+	}
+	public boolean mainLoopCheck(ArrayList<Double> list){
+		boolean result = true;
+		if(list.size() == 1)
+			return true;
+		for(int i = 0; i < list.size() - 1; i++){
+			if(!getDifference(list.get(i), list.get(i+1))){
+				return false;
+			}
+		}
+		
+		return result;
 		
 	}
 }	
