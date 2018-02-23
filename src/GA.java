@@ -10,7 +10,6 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
-import java.util.ArrayList;
 //import java.util.List;
 //import java.util.Random;
 import javax.swing.JFrame;
@@ -31,8 +30,8 @@ public class GA extends GACompents{
 		ArrayList<Double> listOfHighestFitnesses = new ArrayList<Double>();
 		
 		
-		ga.setNumberIndiv(10);
-		ga.setNumberGenes(3);
+		ga.setNumberIndiv(5);
+		ga.setNumberGenes(5);
 		ga.setObjFun("15*x -x*x");
 		int x = ga.numberIndiv;
 		int y = ga.numberOfGenes;
@@ -71,14 +70,34 @@ public class GA extends GACompents{
 		System.out.print(mostFit + " ,");
 		double fitnessOfMostFit = ga.getMostFitFitness(initialFitnessLevels);
 		System.out.println(" " + fitnessOfMostFit);
+
+		//Collections.sort(listOfHighestFitnesses); sorts with increasing order
 		
-		
-		//Main GA loop
-		while(ga.mainLoopCheck(listOfHighestFitnesses)){
+		System.out.println("------Starting GA Algorithm ------");
+		//Main GA loop 
+		boolean chek = false;
+		while(!chek){
+			System.out.println("Generation: " + numberOfGenerations++);
+			
+			//remove lowest fitness levels
+			double[] chromosomeToRemove = ga.getLeastFit(decimalVersions);
+			System.out.println("Least Fit: " + chromosomeToRemove[1] + "at Location: " + chromosomeToRemove[0]);
+			System.out.println("Removing Least Fit");
+			String[][] evolvedChromosomes = ga.removeLeastFit(chrom, chromosomeToRemove);
+			System.out.println("Old chromosomes: ");
+			ga.printArray(chrom);
+			chrom = null;
+			System.out.println("New Chromosomes: ");
+			ga.printArray(evolvedChromosomes);
+			
+			chek = true;
+			
 			
 		}
 
-		
+		for(int i = 0; i < listOfHighestFitnesses.size(); i++){
+			System.out.println(listOfHighestFitnesses.get(i));
+		}
 	}
 	
 	public static void main(String[] args) throws ScriptException{

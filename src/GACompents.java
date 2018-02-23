@@ -62,7 +62,10 @@ public class GACompents {
 		
 		return decodedValues;
 	}
-
+	/*
+	 * 
+	 * returns decimal version of fitness
+	 */
 	public double[] checkPopulationFitness(String[] chromosomes) throws ScriptException{
 		//returns highest value and mean?
 		
@@ -82,20 +85,35 @@ public class GACompents {
 		return fitnesses;
 	}
 	public double getMostFit(String[] chromosomes){
-		double fittest = -1;
+		double fittest = Integer.MIN_VALUE;
 		for(int i = 0; i < chromosomes.length; i++){
 			if(Double.parseDouble(chromosomes[i]) > fittest)
 				fittest = Double.parseDouble(chromosomes[i]);
 		}
 		return fittest;
 	}
+	//returns the actual fitness value of the most fit value
 	public double getMostFitFitness(double[] chromosomes){
 		double fittest = -1;
 		for(int i = 0; i < chromosomes.length; i++){
 			if((chromosomes[i]) > fittest)
-				fittest = (chromosomes[i]);
+				fittest = ((chromosomes[i]));
 		}
 		return fittest;
+	}
+	
+	public double[] getLeastFit(String[] chromosomesDecimal){
+		double[] fitPair = new double[2];
+		double fittestDecimal = Integer.MAX_VALUE;
+
+		for(int i = 0; i < chromosomesDecimal.length; i++){
+			if(Double.parseDouble(chromosomesDecimal[i]) < fittestDecimal){
+				fitPair[0] = i;
+				fitPair[1] = Double.parseDouble(chromosomesDecimal[i]);	
+			}
+		}
+		return fitPair;
+		//returns array with binary index location, then decimal version 
 	}
 	
 	public int getFitness(String variable) throws ScriptException{
@@ -115,10 +133,27 @@ public class GACompents {
 		
 		//System.out.println(engine.eval(newObjFun.toString()));
 		
-		return (Integer)engine.eval(newObjFun.toString());
+		return (int)(engine.eval(newObjFun.toString()));
 		
 		
 	}
+	
+	public String[][] removeLeastFit(String[][] binaryRep, double[] locations){
+		//Turns double into string, then string into int for index look ups, re write?
+		double indexToRemove =  locations[1];
+		
+		//removing binary version
+		String[][] newBinaryArray = new String[numberIndiv-1][numberOfGenes];
+		for(int i = 0; i < numberIndiv - 1; i++){
+			if(i == indexToRemove)
+				continue;
+			for(int j = 0; j < numberOfGenes; j++){
+				newBinaryArray[i][j] = binaryRep[i][j];
+			}
+		}
+		return newBinaryArray;
+	}
+	
 	public boolean getDifference(double val1, double val2){
 		
 		 if(Math.abs(val1 - val2) < 3)
@@ -138,6 +173,16 @@ public class GACompents {
 		}
 		
 		return result;
+		
+	}
+	
+	public void printArray(String[][] chrom){
+		for(int i = 0; i < chrom.length; i++){
+			for(int j = 0; j < numberOfGenes; j++){
+				System.out.print(chrom[i][j]);
+			}
+			System.out.println("");
+		}
 		
 	}
 }	
