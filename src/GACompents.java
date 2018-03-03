@@ -36,18 +36,28 @@ public class GACompents {
 	public  void setNumberGenes(int num){
 		numberOfGenes = num;
 	}
-	
-	public  void generatePopulation(String[][] chromosomes){
+	/**
+	 * Initially takes empty String array and generates random populations with 1's and 0's
+	 * @param chromosomes
+	 */
+	public String[][] generatePopulation(){
 		Random rand = new Random();
+		String[][] chromosomes = new String[numberIndiv][numberOfGenes];
 		for(int i = 0; i < numberIndiv; i++){
 			for(int j = 0; j < numberOfGenes; j++){
-				chromosomes[i][j] = Integer.toString((int)Math.round(rand.nextDouble()));
+				//Generates either 1 or 0
+				int roundedValue = (int)Math.round(rand.nextDouble());
+				chromosomes[i][j] = Integer.toString(roundedValue);
 			}
 		}
-	
+		return chromosomes;
 	}
 	
-
+	/**
+	 * 
+	 * @param chromosomes
+	 * @returns String array with Decimal versions of the passed in binary array
+	 */
 	public String[] decodeChrom(String[][] chromosomes){
 		//Decimal values end up here
 		String[] decodedValues = new String[numberIndiv];
@@ -56,8 +66,9 @@ public class GACompents {
 			for(int j = 0; j < numberOfGenes; j++){
 				temp.append(chromosomes[i][j]);
 			}
-			String x = Integer.toString(Integer.parseInt(temp.toString(),2));
-			decodedValues[i] = x;
+			int decimalValue = Integer.parseInt(temp.toString(), 2); //Converts binary to decimal
+			String decodedGene = Integer.toString(decimalValue);
+			decodedValues[i] = decodedGene;
 		}
 		
 		return decodedValues;
@@ -71,9 +82,6 @@ public class GACompents {
 		
 		double[] fitnesses = new double[numberIndiv];
 		
-		//Decimal values
-		//String[] arrayToCheck = decodeChrom(chromosomes);
-		
 		for(int i = 0; i < chromosomes.length; i++)
 		{
 			fitnesses[i] = getFitness(chromosomes[i]);
@@ -84,17 +92,34 @@ public class GACompents {
 		}
 		return fitnesses;
 	}
+	/**
+	 * 
+	 * @param Fitness value chromosomes
+	 * @return
+	 */
 	public double getMostFit(String[] chromosomes){
-		double fittest = Integer.MIN_VALUE;
+		double fittest = -2147483648.0;
 		for(int i = 0; i < chromosomes.length; i++){
 			if(Double.parseDouble(chromosomes[i]) > fittest)
 				fittest = Double.parseDouble(chromosomes[i]);
 		}
 		return fittest;
 	}
+	
+	public int getIndexOfHighetFit(double[] chromosomes){
+		double fittest = -2147483648.0;
+		int index = 0;
+		for(int i = 0; i < chromosomes.length; i++){
+			if(chromosomes[i] > fittest){
+				fittest = (chromosomes[i]);
+				index = i;
+			}
+		}
+		return index;
+	}
 	//returns the actual fitness value of the most fit value
 	public double getMostFitFitness(double[] chromosomes){
-		double fittest = -1;
+		double fittest = -2147483648.0;
 		for(int i = 0; i < chromosomes.length; i++){
 			if((chromosomes[i]) > fittest)
 				fittest = ((chromosomes[i]));
@@ -117,12 +142,15 @@ public class GACompents {
 	}
 	
 	public int getFitness(String variable) throws ScriptException{
+		//Script Engine evaluates the function
 		ScriptEngineManager mgr = new ScriptEngineManager();
 		ScriptEngine engine = mgr.getEngineByName("JavaScript");
-		Map<String, Object> values = new HashMap<String, Object>();
+		
+		//split the array for every character 
 		String[] objFunArr = objFunction.split("");
 		StringBuilder newObjFun = new StringBuilder();
 		
+		//For each item that's an algebraic variable, insert the value we wish to calculate
 		for(int i = 0; i < objFunArr.length; i++){
 			if(objFunArr[i].equals("x"))
 				objFunArr[i] = variable;
@@ -132,8 +160,8 @@ public class GACompents {
 			newObjFun.append(objFunArr[i]);
 		
 		//System.out.println(engine.eval(newObjFun.toString()));
-		
-		return (int)(engine.eval(newObjFun.toString()));
+		int value = (int)(engine.eval(newObjFun.toString()));
+		return value;
 		
 		
 	}
@@ -183,6 +211,6 @@ public class GACompents {
 			}
 			System.out.println("");
 		}
-		
+		//System.out.println(chrom[chrom.length-1][numberOfGenes-1]);
 	}
 }	

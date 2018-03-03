@@ -31,14 +31,15 @@ public class GA extends GACompents{
 		
 		
 		ga.setNumberIndiv(5);
-		ga.setNumberGenes(5);
+		ga.setNumberGenes(6);
 		ga.setObjFun("15*x -x*x");
 		int x = ga.numberIndiv;
 		int y = ga.numberOfGenes;
 		
-		String[][] chrom = new String[x][y];
-		ga.generatePopulation(chrom);
-		String[] decimalVersions = ga.decodeChrom(chrom);
+		String[][] chrom = ga.generatePopulation();
+		
+		
+		
 		System.out.println("Population size : " + x);
 		System.out.println("Gene Size per chromosome: " + y);
 		
@@ -46,12 +47,16 @@ public class GA extends GACompents{
 		
 		System.out.println("Binary representations of initial chromosomes : ");
 		for(int i = 0; i < x; i++){
-			for(int j = 0; j < ga.numberOfGenes; j++){
+			for(int j = 0; j < y; j++){
 				System.out.print(chrom[i][j]);
 			}
 			System.out.println();
 		}
 		System.out.println("---------");
+		
+		//decoding initial set of chromosomes 
+		String[] decimalVersions = ga.decodeChrom(chrom);
+		
 		System.out.println("Decimal representations of initial chromosomes : ");
 		
 		for(int i = 0; i < decimalVersions.length; i++){
@@ -61,14 +66,15 @@ public class GA extends GACompents{
 		
 		System.out.println("---------");
 		System.out.println("Fitness levels: ");
+		
 		double[] initialFitnessLevels = ga.checkPopulationFitness(decimalVersions);
 		
 		System.out.println("---------");
-		System.out.println("Most fit: ");
-		double mostFit = ga.getMostFit(decimalVersions);
-		listOfHighestFitnesses.add(mostFit);
-		System.out.print(mostFit + " ,");
+		System.out.println("Most fit : ");
+		int mostFitDecimalIndex = ga.getIndexOfHighetFit(initialFitnessLevels);
 		double fitnessOfMostFit = ga.getMostFitFitness(initialFitnessLevels);
+		//listOfHighestFitnesses.add(Double.parseDouble(decimalVersions));
+		System.out.print("decimal value : " + decimalVersions[mostFitDecimalIndex] + ", Fitness Value: ");
 		System.out.println(" " + fitnessOfMostFit);
 
 		//Collections.sort(listOfHighestFitnesses); sorts with increasing order
@@ -83,10 +89,13 @@ public class GA extends GACompents{
 			double[] chromosomeToRemove = ga.getLeastFit(decimalVersions);
 			System.out.println("Least Fit: " + chromosomeToRemove[1] + "at Location: " + chromosomeToRemove[0]);
 			System.out.println("Removing Least Fit");
+			
 			String[][] evolvedChromosomes = ga.removeLeastFit(chrom, chromosomeToRemove);
 			System.out.println("Old chromosomes: ");
 			ga.printArray(chrom);
+			
 			chrom = null;
+			
 			System.out.println("New Chromosomes: ");
 			ga.printArray(evolvedChromosomes);
 			
