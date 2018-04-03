@@ -135,7 +135,6 @@ public class GACompents {
 			if(Double.parseDouble(chromosomesDecimal[i]) < fittestDecimal){
 				fitPair[0] = i;
 				fitPair[1] = Double.parseDouble(chromosomesDecimal[i]);	
-				fittestDecimal = fitPair[1];
 			}
 		}
 		return fitPair;

@@ -85,7 +85,7 @@ public class GA extends GACompents{
 		boolean loopCheck = false;
 		while(!loopCheck){
 			System.out.println("Generation: " + numberOfGenerations++);
-			double[] fitnessLevels = initialFitnessLevels;
+			
 			//remove lowest fitness levels
 			double[] chromosomeToRemove = ga.getLeastFit(decimalVersions);
 			System.out.println("Least Fit: " + chromosomeToRemove[1] + "at Location: " + chromosomeToRemove[0]);
@@ -104,8 +104,8 @@ public class GA extends GACompents{
 			
 			System.out.println("Starting Crossover ****** ");
 			
-			int indexToBeCrossed_1 = ran.nextInt(x) - 2;
-			int indexToBeCrossed_2 = ran.nextInt(x) - 2;
+			int indexToBeCrossed_1 = ran.nextInt(x);
+			int indexToBeCrossed_2 = ran.nextInt(x);
 
 			
 			//avoid matching index values
@@ -114,12 +114,6 @@ public class GA extends GACompents{
 					indexToBeCrossed_1 = indexToBeCrossed_1 + 1;
 			}
 			
-			//avoid array out of bounds
-			if(indexToBeCrossed_1 < 0)
-				indexToBeCrossed_1 = 0;
-			if(indexToBeCrossed_2 < 0)
-				indexToBeCrossed_2 = 0;
-			
 			int swappedBit_1 = ran.nextInt(y);
 			int swappedBit_2 = ran.nextInt(y);
 			
@@ -127,7 +121,7 @@ public class GA extends GACompents{
 			System.out.println("Crhomosome to be crossed: " + "[ " + indexToBeCrossed_2 + " ] Gene: [ " + swappedBit_2 + " ]");
 			
 			String tempValue = evolvedChromosomes[indexToBeCrossed_1][swappedBit_1];
-			evolvedChromosomes[indexToBeCrossed_1][swappedBit_1] = evolvedChromosomes[indexToBeCrossed_2][swappedBit_2];
+			evolvedChromosomes[indexToBeCrossed_1][swappedBit_1] = ""; //= evolvedChromosomes[indexToBeCrossed_2][swappedBit_2];
 			evolvedChromosomes[indexToBeCrossed_2][swappedBit_2] = tempValue;
 			
 			

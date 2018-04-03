@@ -85,7 +85,7 @@ public class GA extends GACompents{
 		boolean loopCheck = false;
 		while(!loopCheck){
 			System.out.println("Generation: " + numberOfGenerations++);
-			double[] fitnessLevels = initialFitnessLevels;
+			
 			//remove lowest fitness levels
 			double[] chromosomeToRemove = ga.getLeastFit(decimalVersions);
 			System.out.println("Least Fit: " + chromosomeToRemove[1] + "at Location: " + chromosomeToRemove[0]);
@@ -104,8 +104,8 @@ public class GA extends GACompents{
 			
 			System.out.println("Starting Crossover ****** ");
 			
-			int indexToBeCrossed_1 = ran.nextInt(x) - 2;
-			int indexToBeCrossed_2 = ran.nextInt(x) - 2;
+			int indexToBeCrossed_1 = ran.nextInt(x) - 1;
+			int indexToBeCrossed_2 = ran.nextInt(x) - 1;
 
 			
 			//avoid matching index values
@@ -116,9 +116,9 @@ public class GA extends GACompents{
 			
 			//avoid array out of bounds
 			if(indexToBeCrossed_1 < 0)
-				indexToBeCrossed_1 = 0;
+				indexToBeCrossed_1++;
 			if(indexToBeCrossed_2 < 0)
-				indexToBeCrossed_2 = 0;
+				indexToBeCrossed_2++;
 			
 			int swappedBit_1 = ran.nextInt(y);
 			int swappedBit_2 = ran.nextInt(y);
